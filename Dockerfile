@@ -10,6 +10,6 @@ RUN pip install --upgrade pip
 RUN pip install flake8
 RUN python --version; pip --version; flake8 --version
 
-COPY src /
+COPY src /src
 WORKDIR /src
 ENTRYPOINT ["python", "main.py"]
