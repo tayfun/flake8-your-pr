@@ -14,4 +14,4 @@ RUN pip install flake8
 RUN python --version; pip --version; flake8 --version
 
 COPY src /src
-ENTRYPOINT ["python", "src/main.py"]
+ENTRYPOINT ["python", "/src/main.py"]
