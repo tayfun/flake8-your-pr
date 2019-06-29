@@ -9,7 +9,10 @@ GITHUB_EVENT_PATH = os.environ['GITHUB_EVENT_PATH']
 print(f'Repo is {GITHUB_REPOSITORY}')
 print(f'Event path is {GITHUB_EVENT_PATH}')
 
-event = json.loads(GITHUB_EVENT_PATH)
+with open(GITHUB_EVENT_PATH) as event_file:
+    event = json.loads(event_file.read())
+
+print(event)
 action = event['action']
 pull_request = event['pull_request']
 # Run pylint, add annotations
