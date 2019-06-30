@@ -48,7 +48,6 @@ main() {
     # Feed to flake8 which will return the output in json format.
     # shellcheck disable=SC2086
     flake8 --format=json $new_files_in_branch | jq '.' > flake8_output.json || true # NOQA
-    cat flake8_output.json
     python /src/main.py
 }
 

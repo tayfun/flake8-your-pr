@@ -74,23 +74,28 @@ if len(annotations) == 0:
 else:
     conclusion = 'error'
 
-requests.post(
+payload = {
+    'name': 'flake8-your-pr',
+    'head_sha': head_sha,
+    'status': 'completed',
+    'conclusion': conclusion,
+    'completed_at': datetime.now(timezone.utc).isoformat(),
+    'output': {
+        'title': 'Flake8 Result',
+        'summary': summary,
+        'text': 'Flake8 results',
+        'annotations': annotations,
+    },
+}
+print(payload)
+response = requests.post(
     f'{URI}/repos/{repo_full_name}/check-runs/',
     headers={
         'Accept': ACCEPT_HEADER_VALUE,
         'Authorization': AUTH_HEADER_VALUE,
     },
-    data={
-        'name': 'flake8-your-pr',
-        'head_sha': head_sha,
-        'status': 'completed',
-        'conclusion': conclusion,
-        'completed_at': datetime.now(timezone.utc).isoformat(),
-        'output': {
-            'title': 'Flake8 Result',
-            'summary': summary,
-            'text': 'Flake8 results',
-            'annotations': annotations,
-        },
-    },
+    data=payload,
 )
+print(response.__dict__)
+print(response)
+response.raise_for_status()
