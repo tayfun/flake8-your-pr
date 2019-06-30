@@ -31,8 +31,12 @@ with open('flake8_output.json') as flake8_output_file:
 
 
 def create_annotations():
+    number_of_files_with_errors = 0
     annotations = list()
     for file_path, error_list in flake8_output:
+        if not error_list:
+            continue
+        number_of_files_with_errors += 1
         for error in error_list:
             annotations.append(dict(
                 path=file_path,
@@ -44,20 +48,26 @@ def create_annotations():
                 end_column=error['column_number'],
             ))
             if len(annotations) == 50:
-                return annotations
-    return annotations
+                return annotations, number_of_files_with_errors
+    return annotations, number_of_files_with_errors
 
 
-annotations = create_annotations()
+annotations, number_of_files_with_errors = create_annotations()
 
 summary = """
 Flake8 Run Summary:
 
 Total Errors: {}
-Files with errors: {}
+Files Checked: {}
+Files with Errors: {}
 """.format(
     len(annotations) if len(annotations) < 50 else '50+',
     len(flake8_output),
+    (
+        number_of_files_with_errors
+        if len(annotations) < 50
+        else '{}+'.format(number_of_files_with_errors),
+    ),
 )
 if len(annotations) == 0:
     conclusion = 'success'
