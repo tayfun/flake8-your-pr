@@ -72,7 +72,7 @@ Files with Errors: {}
 if len(annotations) == 0:
     conclusion = 'success'
 else:
-    conclusion = 'error'
+    conclusion = 'failure'
 
 payload = {
     'name': 'flake8-your-pr',
