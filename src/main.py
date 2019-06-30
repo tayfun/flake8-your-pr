@@ -33,7 +33,7 @@ with open('flake8_output.json') as flake8_output_file:
 def create_annotations():
     number_of_files_with_errors = 0
     annotations = list()
-    for file_path, error_list in flake8_output:
+    for file_path, error_list in flake8_output.items():
         if not error_list:
             continue
         number_of_files_with_errors += 1
