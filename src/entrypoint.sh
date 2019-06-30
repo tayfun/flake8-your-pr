@@ -14,6 +14,9 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 fi
 
 
+cat "$GITHUB_EVENT_PATH"
+
+
 BASE_COMMIT=$(
     jq \
         --raw-output \

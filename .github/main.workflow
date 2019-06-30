@@ -1,5 +1,5 @@
 workflow 'on pull request update, run flake8 and post results' {
-    on = 'check_suite'
+    on = 'pull_request'
     resolves = 'run flake8'
 }
 
