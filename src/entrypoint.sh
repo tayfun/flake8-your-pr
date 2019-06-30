@@ -30,7 +30,7 @@ ACTION=$(
 
 main() {
     # The only 2 actions in pull-request we are interested in
-    if [ "$ACTION" != 'synchronize' ] || [ "$ACTION" != 'opened' ]; then
+    if [ "$ACTION" != 'synchronize' ] && [ "$ACTION" != 'opened' ]; then
         echo "Not interested in this event: $ACTION. Exiting..."
         exit
     fi
