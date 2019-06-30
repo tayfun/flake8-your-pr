@@ -9,9 +9,10 @@ LABEL "com.github.actions.homepage"="https://github.com/tayfun/flake8-your-pr"
 LABEL "com.github.actions.maintainer"="Tayfun Sen"
 
 # RUN apk add --no-cache build-base gcc
+RUN apk add --no-cache git bash jq curl
 RUN pip install --upgrade pip
-RUN pip install flake8
+RUN pip install flake8 flake8-json requests
 RUN python --version; pip --version; flake8 --version
 
 COPY src /src
-ENTRYPOINT ["python", "/src/main.py"]
+CMD ["/src/entrypoint.sh"]
