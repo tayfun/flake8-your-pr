@@ -22,9 +22,8 @@ with open(GITHUB_EVENT_PATH) as event_file:
     event = json.loads(event_file.read())
 
 print(event)
-action = event['action']
 repo_full_name = event['repository']['full_name']
-head_sha = event['check_suite']['pull_requests'][0]['head']['sha']
+head_sha = event['pull_request']['head']['sha']
 
 
 with open('flake8_output.json') as flake8_output_file:

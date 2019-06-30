@@ -20,11 +20,8 @@ cat "$GITHUB_EVENT_PATH"
 BASE_COMMIT=$(
     jq \
         --raw-output \
-        .check_suite.pull_requests[0].base.sha \
+        .pull_request.base.sha \
         "$GITHUB_EVENT_PATH"
-)
-REPO_NAME=$(
-    jq --raw-output .repository.name "$GITHUB_EVENT_PATH"
 )
 ACTION=$(
     jq --raw-output .action "$GITHUB_EVENT_PATH"
@@ -32,15 +29,13 @@ ACTION=$(
 
 
 main() {
-    if [ "$ACTION" == 'completed' ]; then
+    # The only 2 actions in pull-request we are interested in
+    if [ "$ACTION" != 'synchronize' ] || [ "$ACTION" != 'opened' ]; then
+        echo "Not interested in this event: $ACTION. Exiting..."
         exit
     fi
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
-    # cd "$REPO_NAME"
-    ls
-    echo 'checking git status'
-    git status
     new_files_in_branch=$(
         git diff \
             --name-only \
