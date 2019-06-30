@@ -5,6 +5,8 @@ set -e
 set -u
 # if any command in a pipe fails, fail
 set -o pipefail
+# print all debug information
+set -x
 
 
 # This is populated by our secret from the Workflow file.
@@ -45,7 +47,7 @@ main() {
     echo "New files in branch: $new_files_in_branch"
     # Feed to flake8 which will return the output in json format.
     # shellcheck disable=SC2086
-    flake8 --format=json $new_files_in_branch | jq '.' > flake8_output.json  # NOQA
+    flake8 --format=json $new_files_in_branch | jq '.' > flake8_output.json || true# NOQA
     cat flake8_output.json
 }
 
