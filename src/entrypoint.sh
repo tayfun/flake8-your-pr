@@ -23,9 +23,15 @@ BASE_COMMIT=$(
 REPO_NAME=$(
     jq --raw-output .repository.name "$GITHUB_EVENT_PATH"
 )
+ACTION=$(
+    jq --raw-output .action "$GITHUB_EVENT_PATH"
+)
 
 
 main() {
+    if [ "$ACTION" == 'completed' ]; then
+        exit
+    fi
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
     cd "$REPO_NAME"
