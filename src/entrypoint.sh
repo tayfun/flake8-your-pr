@@ -34,7 +34,8 @@ main() {
     fi
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
-    cd "$REPO_NAME"
+    # cd "$REPO_NAME"
+    ls
     new_files_in_branch=$(
         git diff \
             --name-only \
