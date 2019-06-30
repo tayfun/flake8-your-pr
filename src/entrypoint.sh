@@ -36,6 +36,8 @@ main() {
     # replace new lines with space.
     # cd "$REPO_NAME"
     ls
+    echo 'checking git status'
+    git status
     new_files_in_branch=$(
         git diff \
             --name-only \
