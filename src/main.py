@@ -94,7 +94,7 @@ response = requests.post(
         'Accept': ACCEPT_HEADER_VALUE,
         'Authorization': AUTH_HEADER_VALUE,
     },
-    data=payload,
+    json=payload,
 )
 print(response.__dict__)
 print(response)
