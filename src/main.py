@@ -66,7 +66,7 @@ Files with Errors: {}
     (
         number_of_files_with_errors
         if len(annotations) < 50
-        else '{}+'.format(number_of_files_with_errors),
+        else '{}+'.format(number_of_files_with_errors)
     ),
 )
 if len(annotations) == 0:
