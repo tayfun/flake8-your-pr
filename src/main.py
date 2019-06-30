@@ -89,7 +89,7 @@ payload = {
 }
 print(payload)
 response = requests.post(
-    f'{URI}/repos/{repo_full_name}/check-runs/',
+    f'{URI}/repos/{repo_full_name}/check-runs',
     headers={
         'Accept': ACCEPT_HEADER_VALUE,
         'Authorization': AUTH_HEADER_VALUE,
