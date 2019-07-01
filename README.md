@@ -4,7 +4,7 @@ Github Action to flake8 your pull requests
 
 # wait, what?
 
-This is a github action to automatically run flake8 on your pull request and also add annotations if there are errors.
+This is a github action to automatically run flake8 on your pull request and add results as annotations.
 
 <img width="429" alt="Screenshot 2019-07-01 at 22 45 50" src="https://user-images.githubusercontent.com/55836/60468581-019f9e00-9c52-11e9-805b-6e5c97d2af3a.png">
 
@@ -14,7 +14,7 @@ If you are working in a team you would be better off adding checks on pull reque
 
 The trouble is it's a lot of effort to configure these well. You'd need a CI/CD server with some plugins that needs to be configured, updated etc. 
 
-This is where Github Actions comes along. Github actions basically runs a docker image on several events. These could be pull requests, issues, comments, code pushes etc. etc.
+This is where Github Actions comes along. Github basically runs a docker image on several event triggers. These could be pull requests, issues, comments, code pushes etc. etc.
 
 # where can i get this?
 
@@ -44,11 +44,11 @@ If you use this and like it let me know and any pull requests are more than welc
 
 # dev ramblings
 
-I really like the idea behind Github Actions very much. It simplifies devops and adds to the overall software development experience really. Thanks to usage of docker images, you can pretty much do anything with it. 
+I like the idea behind Github Actions very much. It simplifies devops and adds to the overall software development experience really. Thanks to usage of docker images, you can pretty much do anything with it. 
 
-My plan originally was to create a [Github App](https://developer.github.com/apps/quickstart-guides/creating-ci-tests-with-the-checks-api/#introduction), deploy it on AWS using API Gateway and Lambda and use that to run flake8 or anything else I needed. Then I remembered Github Actions. It's much more easier to setup than API Gateways and Lambdas really. What's more, I think it is much more powerful too. With Lambda you are restricted in your environment (Python version this and Node version that etc.) but with Github Actions you can use any image you like. 
+My plan originally was to create a [Github App](https://developer.github.com/apps/quickstart-guides/creating-ci-tests-with-the-checks-api/#introduction), deploy it on AWS using API Gateway and Lambda and use that to run flake8 or anything else I needed. Then I remembered Github Actions. It's much more easier to setup than API Gateways and Lambdas really. What's more, I think it is much more powerful too. With Lambda you are restricted in your environment (Python version this and Node version that etc.) but with Github Actions you can use any docker image you like. 
 
-Well before deciding to write my own linter integrations, I looked into various SaaS solutions and none of them suited me well. Specifically, a lot of them [did not have annotations feature](https://community.sonarsource.com/t/sonarcloud-github-pull-request-analysis-no-inline-comments/7371).
+Before deciding to write my own linter integrations, I looked into various SaaS solutions and none of them suited me well. Specifically, a lot of them [did not have annotations feature](https://community.sonarsource.com/t/sonarcloud-github-pull-request-analysis-no-inline-comments/7371).
 
 ### Gotchas
 
