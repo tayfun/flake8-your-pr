@@ -6,7 +6,8 @@ Github Action to flake8 your pull requests
 
 This is a github action to automatically run flake8 on your pull request and add results as annotations.
 
-<img width="429" alt="Screenshot 2019-07-01 at 22 45 50" src="https://user-images.githubusercontent.com/55836/60468581-019f9e00-9c52-11e9-805b-6e5c97d2af3a.png">
+<img width="400" alt="Screenshot 2019-07-01 at 22 45 50" src="https://user-images.githubusercontent.com/55836/60468581-019f9e00-9c52-11e9-805b-6e5c97d2af3a.png"><img width="435" alt="Screenshot 2019-07-01 at 23 02 27" src="https://user-images.githubusercontent.com/55836/60469413-7673d780-9c54-11e9-8f49-addbea1ced62.png">
+
 
 # but why?
 
