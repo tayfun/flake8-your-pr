@@ -15,27 +15,37 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 	exit 1
 fi
 
+find_base_commit() {
+    BASE_COMMIT=$(
+        jq \
+            --raw-output \
+            .pull_request.base.sha \
+            "$GITHUB_EVENT_PATH"
+    )
+    # If this is not a pull request action it can be a check suite re-requested
+    if [ "$BASE_COMMIT" == null ]; then
+        BASE_COMMIT=$(
+            jq \
+                --raw-output \
+                .check_suite.pull_requests[0].base.sha \
+                "$GITHUB_EVENT_PATH"
+        )
+    fi
+}
 
-cat "$GITHUB_EVENT_PATH"
-
-
-BASE_COMMIT=$(
-    jq \
-        --raw-output \
-        .pull_request.base.sha \
-        "$GITHUB_EVENT_PATH"
-)
 ACTION=$(
     jq --raw-output .action "$GITHUB_EVENT_PATH"
 )
+# First 2 actions are for pull requests, last 2 are for check suites.
+ENABLED_ACTIONS='synchronize opened requested rerequested'
 
 
 main() {
-    # The only 2 actions in pull-request we are interested in
-    if [ "$ACTION" != 'synchronize' ] && [ "$ACTION" != 'opened' ]; then
-        echo "Not interested in this event: $ACTION. Exiting..."
+    if [[ $ENABLED_ACTIONS != *"$ACTION"* ]]; then
+        echo -e "Not interested in this event: $ACTION.\nExiting..."
         exit
     fi
+    find_base_commit
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
     new_files_in_branch=$(
