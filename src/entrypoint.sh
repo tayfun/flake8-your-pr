@@ -57,7 +57,12 @@ main() {
     echo "New files in branch: $new_files_in_branch"
     # Feed to flake8 which will return the output in json format.
     # shellcheck disable=SC2086
-    flake8 --format=json $new_files_in_branch | jq '.' > flake8_output.json || true # NOQA
+    args="."
+    if [[ $# -ne 0 ]]; then
+        args="$@"
+    fi
+
+    flake8 ${args} --format=json $new_files_in_branch | jq '.' > flake8_output.json || true # NOQA
     python /src/main.py
 }
 
