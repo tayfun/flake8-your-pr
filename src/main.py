@@ -1,7 +1,8 @@
 import json
 import os
 import requests
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 
 
 class CheckRun:
@@ -97,7 +98,7 @@ class CheckRun:
             'head_sha': self.head_sha,
             'status': 'completed',
             'conclusion': conclusion,
-            'completed_at': datetime.now(timezone.utc).isoformat(),
+            'completed_at': datetime.now(pytz.utc).isoformat(),
             'output': {
                 'title': 'Flake8 Result',
                 'summary': summary,
