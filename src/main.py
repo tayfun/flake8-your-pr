@@ -11,8 +11,8 @@ class CheckRun:
     URI = 'https://api.github.com'
     # We need preview version to access check run API
     API_VERSION = 'antiope-preview'
-    ACCEPT_HEADER_VALUE = f"application/vnd.github.{API_VERSION}+json"
-    AUTH_HEADER_VALUE = f"token {GITHUB_TOKEN}"
+    ACCEPT_HEADER_VALUE = "application/vnd.github.{}+json".format(API_VERSION)
+    AUTH_HEADER_VALUE = "token {}".format(GITHUB_TOKEN)
     # This is the max annotations Github API accepts in one go.
     MAX_ANNOTATIONS = 50
 
@@ -112,7 +112,7 @@ class CheckRun:
         payload = self.get_payload()
         print(payload)
         response = requests.post(
-            f'{self.URI}/repos/{self.repo_full_name}/check-runs',
+            '{}/repos/{}/check-runs'.format(self.URI, self.repo_full_name),
             headers={
                 'Accept': self.ACCEPT_HEADER_VALUE,
                 'Authorization': self.AUTH_HEADER_VALUE,
