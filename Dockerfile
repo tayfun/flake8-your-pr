@@ -1,4 +1,4 @@
-FROM python:2.7
+FROM python:2.7-alpine
 
 LABEL "com.github.actions.name"="Run flake8 on your PR - with annotations!"
 LABEL "com.github.actions.description"="GitHub Action to run flake8 linter on your Pull Requests and add annotations on errors"
