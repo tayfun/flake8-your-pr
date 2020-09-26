@@ -11,7 +11,7 @@ LABEL "com.github.actions.maintainer"="Tayfun Sen"
 # RUN apk add --no-cache build-base gcc
 RUN apk add --no-cache git bash jq curl
 RUN pip install --upgrade pip
-RUN pip install flake8 flake8-json requests
+RUN pip install flake8 flake8-json requests pytz
 RUN python --version; pip --version; flake8 --version
 
 COPY src /src
