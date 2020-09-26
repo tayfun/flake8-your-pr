@@ -22,15 +22,20 @@ This is where Github Actions comes along. Github basically runs a docker image o
 Easy, tiger. Sign up for beta on [Github](https://github.com/features/actions). And then simply add the following code in your repo root `.github/main.workflow`:
 
 ```
-workflow "on check suite creation, run flake8 and post results" {
-    on = "pull_request"
-    resolves = "run flake8"
-}
+name: Flake8 your PR
+on: [pull_request]
+jobs:
+  flake8-your-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
-action "run flake8" {
-    uses = "tayfun/flake8-your-pr@master"
-    secrets = ["GITHUB_TOKEN"]
-}
+      - uses: valentijnscholten/flake8-your-pr@master
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
 ```
 
 Create a pull request with some Python code and voila, you should see any errors as annotations.
