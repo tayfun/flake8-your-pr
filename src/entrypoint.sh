@@ -70,7 +70,7 @@ main() {
         echo "New python files in PR: $new_python_files_in_branch"
         flake8 --format=json $new_python_files_in_branch | jq '.' > flake8_output.json || true # NOQA
     else
-        echo "No new pythong files in PR"
+        echo "No new python files in PR"
     fi
     python /src/main.py
 }
