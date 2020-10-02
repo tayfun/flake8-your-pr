@@ -81,7 +81,7 @@ main() {
             git diff \
                 --name-only \
                 --diff-filter=AM \
-                "$BASE_COMMIT" "$HEAD_COMMIT" | grep '\.py$' | tr '\n' ' '
+                "$BASE_COMMIT".."$HEAD_COMMIT" | grep '\.py$' | tr '\n' ' '
         )
         echo "New python files in PR: $new_python_files_in_branch"
         flake8 --format=json $new_python_files_in_branch | jq '.' > flake8_output.json || true # NOQA
