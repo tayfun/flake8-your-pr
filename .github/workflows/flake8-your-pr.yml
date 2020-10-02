@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          ref: "${{ github.head_ref }}"
           fetch-depth: 2
 
       # - uses: tayfun/flake8-your-pr@master

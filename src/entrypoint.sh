@@ -39,6 +39,15 @@ find_base_commit() {
     fi
 }
 
+find_head_commit() {
+    HEAD_COMMIT=$(
+        jq \
+            --raw-output \
+            .pull_request.head.sha \
+            "$GITHUB_EVENT_PATH"
+    )
+}
+
 ACTION=$(
     jq --raw-output .action "$GITHUB_EVENT_PATH"
 )
@@ -58,7 +67,7 @@ main() {
         git diff \
             --name-only \
             --diff-filter=AM \
-            "$BASE_COMMIT"
+            "$BASE_COMMIT" "$HEAD_COMMIT"
     )
     new_files_in_branch1=$(echo $new_files_in_branch | tr '\n' ' ')
 
@@ -71,7 +80,7 @@ main() {
             git diff \
                 --name-only \
                 --diff-filter=AM \
-                "$BASE_COMMIT" | grep '\.py$' | tr '\n' ' '
+                "$BASE_COMMIT" "$HEAD_COMMIT" | grep '\.py$' | tr '\n' ' '
         )
         echo "New python files in PR: $new_python_files_in_branch"
         flake8 --format=json $new_python_files_in_branch | jq '.' > flake8_output.json || true # NOQA
