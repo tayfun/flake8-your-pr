@@ -18,6 +18,12 @@ fi
 echo "current commit"
 git log -1
 
+echo "git status"
+git status
+
+echo "git diff"
+git diff
+
 echo "event payload:"
 cat $GITHUB_EVENT_PATH
 
