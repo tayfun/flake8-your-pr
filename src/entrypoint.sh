@@ -61,6 +61,7 @@ main() {
         exit
     fi
     find_base_commit
+    find_head_commit    
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
     new_files_in_branch=$(
