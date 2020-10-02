@@ -15,6 +15,9 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 	exit 1
 fi
 
+echo "current commit"
+git log -1
+
 echo "event payload:"
 cat $GITHUB_EVENT_PATH
 
