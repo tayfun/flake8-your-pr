@@ -15,6 +15,9 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 	exit 1
 fi
 
+echo "event payload:"
+cat $GITHUB_EVENT_PATH
+
 find_base_commit() {
     BASE_COMMIT=$(
         jq \
