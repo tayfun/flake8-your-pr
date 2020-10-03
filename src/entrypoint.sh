@@ -67,35 +67,35 @@ main() {
         exit
     fi
 
-    # find_base_commit
-    # find_head_commit    
-    # # Get files Added or Modified wrt base commit, filter for Python,
-    # # replace new lines with space.
-    # new_files_in_branch=$(
-    #     git diff \
-    #         --name-only \
-    #         --diff-filter=AM \
-    #         "$BASE_COMMIT"
-    # )
-    # new_files_in_branch1=$(echo $new_files_in_branch | tr '\n' ' ')
+    find_base_commit
+    find_head_commit    
+    # Get files Added or Modified wrt base commit, filter for Python,
+    # replace new lines with space.
+    new_files_in_branch=$(
+        git diff \
+            --name-only \
+            --diff-filter=AM \
+            "$BASE_COMMIT"
+    )
+    new_files_in_branch1=$(echo $new_files_in_branch | tr '\n' ' ')
 
-    # echo "New files in PR: $new_files_in_branch1"
-    # # Feed to flake8 which will return the output in json format.
-    # # shellcheck disable=SC2086
-    # # only run flake8 if there are python files changed
-    # if [[ $new_files_in_branch =~ .*".py".* ]]; then
-    #     new_python_files_in_branch=$(
-    #         git diff \
-    #             --name-only \
-    #             --diff-filter=AM \
-    #             "$BASE_COMMIT" | grep '\.py$' | tr '\n' ' '
-    #     )
-    #     echo "New python files in PR: $new_python_files_in_branch"
-    #     flake8 --format=json $new_python_files_in_branch | jq '.' > flake8_output.json || true # NOQA
-    # else
-    #     echo "No new python files in PR"
-    # fi
-    flake8 --format=json . | jq '.' > flake8_output.json || true # NOQA    
+    echo "New files in PR: $new_files_in_branch1"
+    # Feed to flake8 which will return the output in json format.
+    # shellcheck disable=SC2086
+    # only run flake8 if there are python files changed
+    if [[ $new_files_in_branch =~ .*".py".* ]]; then
+        new_python_files_in_branch=$(
+            git diff \
+                --name-only \
+                --diff-filter=AM \
+                "$BASE_COMMIT" | grep '\.py$' | tr '\n' ' '
+        )
+        echo "New python files in PR: $new_python_files_in_branch"
+        flake8 --format=json $new_python_files_in_branch | jq '.' > flake8_output.json || true # NOQA
+    else
+        echo "No new python files in PR"
+    fi
+    # flake8 --format=json . | jq '.' > flake8_output.json || true # NOQA    
     python /src/main.py
 }
 
