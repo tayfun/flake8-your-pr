@@ -43,6 +43,7 @@ find_base_commit() {
                 "$GITHUB_EVENT_PATH"
         )
     fi
+    echo "BASE_COMMIT: $BASE_COMMIT"
 }
 
 find_head_commit() {
@@ -52,6 +53,7 @@ find_head_commit() {
             .pull_request.head.sha \
             "$GITHUB_EVENT_PATH"
     )
+    echo "HEAD_COMMIT: $HEAD_COMMIT"    
 }
 
 ACTION=$(
