@@ -70,9 +70,12 @@ main() {
     fi
 
     find_base_commit
-    find_head_commit    
+    find_head_commit
     # Get files Added or Modified wrt base commit, filter for Python,
     # replace new lines with space.
+
+    # currently in github actions the base commit is the original commit the PR was branched from
+    # we could try to rebase on top of the HEAD of dev to make sure it picks up the new code in dev
     new_files_in_branch=$(
         git diff \
             --name-only \
