@@ -15,6 +15,10 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 	exit 1
 fi
 
+cat docker/entrypoint-integration-tests.sh
+cat entrypoint-integration-tests.sh
+
+
 echo "current commit"
 git log -1
 
