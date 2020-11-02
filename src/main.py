@@ -1,7 +1,8 @@
 import json
 import os
 import requests
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 
 
 class CheckRun:
@@ -11,8 +12,8 @@ class CheckRun:
     URI = 'https://api.github.com'
     # We need preview version to access check run API
     API_VERSION = 'antiope-preview'
-    ACCEPT_HEADER_VALUE = f"application/vnd.github.{API_VERSION}+json"
-    AUTH_HEADER_VALUE = f"token {GITHUB_TOKEN}"
+    ACCEPT_HEADER_VALUE = "application/vnd.github.{}+json".format(API_VERSION)
+    AUTH_HEADER_VALUE = "token {}".format(GITHUB_TOKEN)
     # This is the max annotations Github API accepts in one go.
     MAX_ANNOTATIONS = 50
 
@@ -37,8 +38,11 @@ class CheckRun:
             self.head_sha = check_suite['pull_requests'][0]['base']['sha']
 
     def read_flake8_output(self):
-        with open('flake8_output.json') as flake8_output_file:
-            self.flake8_output = json.loads(flake8_output_file.read())
+        if os.path.exists('flake8_output.json'):
+            with open('flake8_output.json') as flake8_output_file:
+                self.flake8_output = json.loads(flake8_output_file.read())
+        else:
+            self.flake8_output = {}
 
     def create_single_annotation(self, error, file_path):
         message = '{} ({})'.format(error['text'], error['code'])
@@ -97,7 +101,7 @@ class CheckRun:
             'head_sha': self.head_sha,
             'status': 'completed',
             'conclusion': conclusion,
-            'completed_at': datetime.now(timezone.utc).isoformat(),
+            'completed_at': datetime.now(pytz.utc).isoformat(),
             'output': {
                 'title': 'Flake8 Result',
                 'summary': summary,
@@ -112,7 +116,7 @@ class CheckRun:
         payload = self.get_payload()
         print(payload)
         response = requests.post(
-            f'{self.URI}/repos/{self.repo_full_name}/check-runs',
+            '{}/repos/{}/check-runs'.format(self.URI, self.repo_full_name),
             headers={
                 'Accept': self.ACCEPT_HEADER_VALUE,
                 'Authorization': self.AUTH_HEADER_VALUE,
