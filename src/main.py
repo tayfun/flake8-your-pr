@@ -1,8 +1,8 @@
 import json
 import os
 import requests
-from datetime import datetime
-import pytz
+from datetime import datetime, timezone
+
 
 
 class CheckRun:
@@ -101,7 +101,7 @@ class CheckRun:
             'head_sha': self.head_sha,
             'status': 'completed',
             'conclusion': conclusion,
-            'completed_at': datetime.now(pytz.utc).isoformat(),
+            'completed_at': datetime.now(timezone.utc).isoformat(),
             'output': {
                 'title': 'Flake8 Result',
                 'summary': summary,
@@ -116,7 +116,7 @@ class CheckRun:
         payload = self.get_payload()
         print(payload)
         response = requests.post(
-            '{}/repos/{}/check-runs'.format(self.URI, self.repo_full_name),
+            f'{self.URI}/repos/{self.repo_full_name}/check-runs',
             headers={
                 'Accept': self.ACCEPT_HEADER_VALUE,
                 'Authorization': self.AUTH_HEADER_VALUE,
